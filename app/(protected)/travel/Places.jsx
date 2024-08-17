@@ -8,8 +8,10 @@ export default async function Places() {
   if(error){
     console.log(error)
   }
+  const { data: { user }, error:userError } = await supabase.auth.getUser()
   return (
     <div className='grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 border-2 h-screen w-full p-10'>
+      <p>Welcome Back, {user?.email}</p>
       {data.map((place) => (
         <Card key={place.id} className='flex flex-col h-full'>
           <CardHeader className='bg-gray-100 p-4'>
