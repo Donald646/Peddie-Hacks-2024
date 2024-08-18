@@ -10,15 +10,20 @@ export default async function PublicNavbar() {
   return (
     <div className='flex justify-between items-center w-full sticky top-0 backdrop-blur-md p-2 md:px-[2vw] z-50'>
       <div className='hidden md:flex flex-row gap-2 items-center'>
-Travel AI
+WanderWise
       </div>
      
 
       <div className='flex items-center gap-2'>
         {user ? (
-          <Link href="/travel">
-            <Button className="" variant={"default"}>Travel</Button>
-          </Link>
+          <div>
+            <Link href="/travel">
+              <Button className="" variant={"default"}>Travel</Button>
+            </Link>
+            <Link href="https://fca087e1-0837-451c-b560-0b930245bb5a-00-1lvtw5rggj0pm.spock.replit.dev/">
+              <Button className="" variant={"default"}>Map</Button>
+            </Link>
+          </div>
         ) : (
           <>
             <Link href="/login" className='hidden md:block'>
