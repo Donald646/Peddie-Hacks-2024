@@ -6,6 +6,7 @@ import { readStreamableValue } from 'ai/rsc';
 import { Input } from '../ui/input';
 import { Button } from '../ui/button';
 import Markdown from 'react-markdown';
+import { Ellipsis } from 'lucide-react';
 
 // Allow streaming responses up to 30 seconds
 export const maxDuration = 30;
@@ -13,9 +14,10 @@ export const maxDuration = 30;
 export default function Chat({prompt}:{prompt:string}) {
   const [conversation, setConversation] = useState<Message[]>([]);
   const [input, setInput] = useState<string>('');
-
+  const [isTyping, setIsTyping] = useState(false);
   return (
     <div className="flex flex-col h-screen">
+      <p className='text-3xl font-bold text-center'>{prompt}</p>
       <div className="flex-1 overflow-y-auto p-4 space-y-4">
         {conversation.map((message, index) => (
           <div
@@ -44,6 +46,13 @@ export default function Chat({prompt}:{prompt:string}) {
             </div>
           </div>
         ))}
+          {isTyping && (
+          <div className="flex justify-start">
+            <div className="bg-gray-200 text-black p-3 rounded-lg">
+            <Ellipsis className='animate-pulse' />
+            </div>
+          </div>
+        )}
       </div>
 
       <div className="p-4 border-t">
@@ -59,23 +68,26 @@ export default function Chat({prompt}:{prompt:string}) {
           />
           <Button
             onClick={async () => {
+              setConversation(prev => [...prev, { role: 'user', content: input },
+              ]);
+              setIsTyping(true)
               const { messages, newMessage } = await continueConversation([
                 ...conversation,
-                { role: 'user', content: input },
+                { role: 'user', content: input }
               ], prompt);
-
               setInput('');
               let textContent = '';
-
               for await (const delta of readStreamableValue(newMessage)) {
                 textContent = `${textContent}${delta}`;
-
                 setConversation([
                   ...messages,
                   { role: 'assistant', content: textContent },
                 ]);
               }
+              setIsTyping(false)
+
             }}
+            
           >
             Send
           </Button>

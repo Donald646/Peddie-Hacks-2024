@@ -22,7 +22,7 @@ export default async function Places() {
     <div className='min-h-screen bg-gradient-to-br from-blue-100 to-indigo-100'>
       <header className='bg-white shadow-md p-6'>
         <div className='max-w-7xl mx-auto flex justify-between items-center'>
-          <h1 className='text-3xl font-bold text-gray-800'>Explore Places</h1>
+          <h1 className='text-3xl font-bold'>Explore Places</h1>
           <div className='flex items-center space-x-2'>
             <User className='text-gray-600' />
             <p className='text-gray-600'>{user?.email}</p>
@@ -35,17 +35,17 @@ export default async function Places() {
           {data?.map((place) => (
             <Drawer key={place.id}>
               <DrawerTrigger asChild>
-                <Card className='hover:shadow-lg transition-shadow duration-300 cursor-pointer'>
-                  <CardHeader className='bg-white border-b p-4'>
-                    <CardTitle className='text-xl font-semibold text-gray-800 flex items-center'>
-                      <MapPin className='mr-2 text-indigo-500' size={20} />
-                      {place.title}
-                    </CardTitle>
-                  </CardHeader>
-                  <CardContent className='p-4'>
-                    <CardDescription className='text-gray-600'>{place.description}</CardDescription>
-                  </CardContent>
-                </Card>
+              <Card className='hover:shadow-lg transition-shadow duration-300 cursor-pointer overflow-hidden'>
+              <CardHeader className='bg-white border-b p-4'>
+                <CardTitle className='text-xl font-semibold text-gray-800 flex items-center'>
+                  <MapPin className='mr-2 text-primary' size={20} />
+                  {place.title}
+                </CardTitle>
+              </CardHeader>
+              <CardContent className='p-4'>
+                <CardDescription className='text-gray-600'>{place.description}</CardDescription>
+              </CardContent>
+            </Card>
               </DrawerTrigger>
               <DrawerContent className='h-screen top-0 right-0 left-auto mt-0 w-[400px] sm:w-[500px]'>
                 <Chat prompt={place.title} />
