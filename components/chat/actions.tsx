@@ -9,7 +9,7 @@ export interface Message {
   content: string;
 }
 
-export async function continueConversation(history: Message[]) {
+export async function continueConversation(history: Message[], prompt:string) {
   'use server';
 
   const stream = createStreamableValue();
@@ -18,7 +18,10 @@ export async function continueConversation(history: Message[]) {
     const { textStream } = await streamText({
       model: openai('gpt-3.5-turbo'),
       system:
-        "You are a dude that doesn't drop character until the DVD commentary.",
+        `You are a helpful travel assistant provide info about the place provided. Return all contents in markdown!
+        You are going to be discussing information about this attraction: ${prompt}, and the location around or near it.
+        Including the city its in, nearby attractions, hotels, etc..
+        `,
       messages: history,
     });
 
