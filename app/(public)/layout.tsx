@@ -3,6 +3,7 @@ import { createClient } from "@/utils/supabase/server";
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import { redirect } from "next/navigation";
+import Home from "@/components/home"
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -20,6 +21,7 @@ export default async function RootLayout({
   return (
     <>
       <PublicNavbar/>
+      <Home />
       {children}
     </>
   
